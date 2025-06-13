@@ -1,0 +1,33 @@
+#calc-frame {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width:150px;
+    background-color: black;
+    padding: 30px;
+}
+
+#screen {
+    height:60px;
+    background-color: gray;
+    margin-bottom: 20px;
+}
+
+#keyboard {
+    background-color: blue;
+    flex:auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+#keyboard-row {
+    display: flex;
+    flex: auto;
+    gap: 5px;
+}
+
+button.calc-but {
+    flex: 1;
+}
