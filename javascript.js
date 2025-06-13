@@ -30,11 +30,11 @@ function operate(op1, op2, operator){
     }
 }
 
-function equalButton() {
+function pushEqualButton() {
     if (operator === '' || operand1 === "ERROR") {
         return;
     }
-    ans = String(operate(Number(operand1), Number(operand2)));
+    ans = String(operate(Number(operand1), Number(operand2), operator));
     displayAns();
 }
 
@@ -44,9 +44,6 @@ function pressNumber(digit) {
     } else {
         operand2 = addDigit(digit, operand2);
     }
-    // !! delete this
-    console.log(operand1);
-    console.log(operand2);
 }
 
 function addDigit(digit, operand) {
@@ -60,16 +57,32 @@ function addDigit(digit, operand) {
             return digit;
         }
     } else {
-        return operand + 'digit'
+        return operand + digit;
     }
 }
 
 function pressOperator(op) {
-    operator = op;
+    if (operator === '') {
+        operator = op;
+        operand2 = '0';
+    } else {
+        pushEqualButton();
+        operand1 = ans;
+        operand2 = '0';
+        operator = op;
+    }
 }
 
 function displayAns() {
     // !! TBI
+    console.log(ans);
+}
+
+function pressAllClear() {
+    operand1 = '0';
+    operand2 = '';
+    operator = '';
+    ans = '';
 }
 
 
@@ -79,3 +92,25 @@ let operand1 = '0';
 let operand2 = '';
 let operator = '';
 let ans = '';
+
+// Assign number buttons
+const numButs = document.querySelectorAll(".number.calc-but");
+numButs.forEach((num) => {
+num.addEventListener("click", () => 
+        {pressNumber(num.innerText)}
+    )
+});
+
+const acBut = document.querySelector(".clear.calc-but");
+acBut.addEventListener("click", pressAllClear);
+
+const eqBut = document.querySelector(".eq.calc-but");
+eqBut.addEventListener("click", pushEqualButton);
+
+// Assign operators
+const opButs = document.querySelectorAll(".operator.calc-but");
+opButs.forEach((op) => {
+op.addEventListener("click", () => 
+        {pressOperator(op.innerText)}
+    )
+});
