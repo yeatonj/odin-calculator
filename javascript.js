@@ -38,6 +38,36 @@ function equalButton() {
     displayAns();
 }
 
+function pressNumber(digit) {
+    if (operator === '') {
+        operand1 = addDigit(digit, operand1);
+    } else {
+        operand2 = addDigit(digit, operand2);
+    }
+    // !! delete this
+    console.log(operand1);
+    console.log(operand2);
+}
+
+function addDigit(digit, operand) {
+    if (operand.length > 10) {
+        return;
+    }
+    if (operand === '0') {
+        if (digit ==='0') {
+            return '0';
+        } else {
+            return digit;
+        }
+    } else {
+        return operand + 'digit'
+    }
+}
+
+function pressOperator(op) {
+    operator = op;
+}
+
 function displayAns() {
     // !! TBI
 }
@@ -46,6 +76,6 @@ function displayAns() {
 // Non-function definitions
 
 let operand1 = '0';
-let operand2 = '0';
+let operand2 = '';
 let operator = '';
 let ans = '';
