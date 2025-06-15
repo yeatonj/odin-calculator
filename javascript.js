@@ -39,16 +39,20 @@ function pushEqualButton() {
 }
 
 function pressNumber(digit) {
+    if (ans) {
+        pressAllClear();
+    }
     if (operator === '') {
         operand1 = addDigit(digit, operand1);
     } else {
         operand2 = addDigit(digit, operand2);
     }
+    updateDisplayDigit();
 }
 
 function addDigit(digit, operand) {
     if (operand.length > 10) {
-        return;
+        return operand;
     }
     if (operand === '0') {
         if (digit ==='0') {
@@ -65,17 +69,27 @@ function pressOperator(op) {
     if (operator === '') {
         operator = op;
         operand2 = '0';
+        updateDisplayOperator();
     } else {
         pushEqualButton();
         operand1 = ans;
         operand2 = '0';
         operator = op;
+        ans = '';
+        updateDisplayOperator()
     }
 }
 
 function displayAns() {
-    // !! TBI
-    console.log(ans);
+    const dispTop = document.querySelector('#screen .top');
+    const dispBot = document.querySelector('#screen .bot');
+
+    dispTop.textContent = operand1 + ' ' + operator + ' ' + operand2;
+    if (ans.length > 11) {
+        dispBot.textContent = Number.parseFloat(ans).toExponential(5);
+    } else {
+        dispBot.textContent = ans;
+    }
 }
 
 function pressAllClear() {
@@ -83,8 +97,34 @@ function pressAllClear() {
     operand2 = '';
     operator = '';
     ans = '';
+
+    const dispTop = document.querySelector('#screen .top');
+    const dispBot = document.querySelector('#screen .bot');
+    dispTop.textContent = '';
+    dispBot.textContent = operand1;
 }
 
+function updateDisplayDigit() {
+    // Add to the main display, do not change upper display
+    const toDisplay = (operator === '') ? operand1 : operand2;
+    const disp = document.querySelector('#screen .bot');
+    disp.textContent = toDisplay;
+}
+
+function updateDisplayOperator() {
+    const dispTop = document.querySelector('#screen .top');
+    const dispBot = document.querySelector('#screen .bot');
+
+    console.log(operand1.length)
+
+    const op1Display = (operand1.length > 11) ? Number.parseFloat(operand1).toExponential(5) : operand1;
+    (operand1.length) > 10 ? console.log('true') : console.log('false');
+    console.log(op1Display);
+
+    dispTop.textContent = op1Display + ' ' + operator;
+    dispBot.textContent = operand2;
+
+}
 
 // Non-function definitions
 

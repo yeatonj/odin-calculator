@@ -21,7 +21,8 @@
 #screen .top {
     padding: 3px;
     background-color: tan;
-    min-height: 10px;
+    min-height: 14px;
+    font-size: 12px;
 }
 
 #screen .bot {
