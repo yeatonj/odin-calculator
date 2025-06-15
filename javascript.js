@@ -57,11 +57,17 @@ function addDigit(digit, operand) {
     if (operand === '0') {
         if (digit ==='0') {
             return '0';
+        } else if (digit === '.') {
+            return '0.';
         } else {
             return digit;
         }
     } else {
-        return operand + digit;
+        if (digit != '.' || (digit === '.' && !operand.includes('.'))) {
+            return operand + digit;
+        } else {
+            return operand;
+        }
     }
 }
 
@@ -84,7 +90,10 @@ function displayAns() {
     const dispTop = document.querySelector('#screen .top');
     const dispBot = document.querySelector('#screen .bot');
 
-    dispTop.textContent = operand1 + ' ' + operator + ' ' + operand2;
+    const op1Display = (operand1.length > 11) ? Number.parseFloat(operand1).toExponential(5) : operand1;
+    const op2Display = (operand2.length > 11) ? Number.parseFloat(operand2).toExponential(5) : operand2;
+
+    dispTop.textContent = op1Display + ' ' + operator + ' ' + op2Display + ' =';
     if (ans.length > 11) {
         dispBot.textContent = Number.parseFloat(ans).toExponential(5);
     } else {
@@ -102,6 +111,28 @@ function pressAllClear() {
     const dispBot = document.querySelector('#screen .bot');
     dispTop.textContent = '';
     dispBot.textContent = operand1;
+}
+
+function pressDel() {
+    if (ans != '') {
+        return;
+    }
+    if (operator === '') {
+        // work on operand 1
+        if (operand1.length === 1) {
+            operand1 = '0';
+        } else {
+            operand1 = operand1.slice(0, operand1.length - 1);
+        }
+    } else {
+        // work on operand 2
+        if (operand2.length === 1) {
+            operand2 = '0';
+        } else {
+            operand2 = operand2.slice(0, operand2.length - 1);
+        }
+    }
+    updateDisplayDigit();
 }
 
 function updateDisplayDigit() {
@@ -123,7 +154,6 @@ function updateDisplayOperator() {
 
     dispTop.textContent = op1Display + ' ' + operator;
     dispBot.textContent = operand2;
-
 }
 
 // Non-function definitions
@@ -141,11 +171,17 @@ num.addEventListener("click", () =>
     )
 });
 
+// Assign AC button
 const acBut = document.querySelector(".clear.calc-but");
 acBut.addEventListener("click", pressAllClear);
 
+// Assign equals
 const eqBut = document.querySelector(".eq.calc-but");
 eqBut.addEventListener("click", pushEqualButton);
+
+// Assign delete
+const delBut = document.querySelector(".del.calc-but");
+delBut.addEventListener("click", pressDel);
 
 // Assign operators
 const opButs = document.querySelectorAll(".operator.calc-but");
