@@ -76,6 +76,8 @@ function pressOperator(op) {
         operator = op;
         operand2 = '0';
         updateDisplayOperator();
+    } else if (ans == 'Infinity') {
+        return;
     } else {
         pushEqualButton();
         operand1 = ans;
@@ -153,7 +155,6 @@ function updateDisplayOperator() {
 }
 
 function keyboardController(key) {
-    console.log(key)
     const nums = '1234567890.';
     const ops = '+-/*'
     if (nums.includes(key)) {
