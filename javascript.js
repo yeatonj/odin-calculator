@@ -152,6 +152,23 @@ function updateDisplayOperator() {
     dispBot.textContent = operand2;
 }
 
+function keyboardController(key) {
+    console.log(key)
+    const nums = '1234567890.';
+    const ops = '+-/*'
+    if (nums.includes(key)) {
+        pressNumber(key);
+    } else if (ops.includes(key)) {
+        pressOperator(key);
+    } else if (key === 'Enter' || key === '=') {
+        pushEqualButton();
+    } else if (key === 'Backspace') {
+        pressDel();
+    } else if (key == 'c') {
+        pressAllClear();
+    }
+}
+
 // Non-function definitions
 
 let operand1 = '0';
@@ -186,3 +203,5 @@ op.addEventListener("click", () =>
         {pressOperator(op.innerText)}
     )
 });
+
+document.addEventListener('keydown', (event) => keyboardController(event.key));
