@@ -146,11 +146,7 @@ function updateDisplayOperator() {
     const dispTop = document.querySelector('#screen .top');
     const dispBot = document.querySelector('#screen .bot');
 
-    console.log(operand1.length)
-
     const op1Display = (operand1.length > 11) ? Number.parseFloat(operand1).toExponential(5) : operand1;
-    (operand1.length) > 10 ? console.log('true') : console.log('false');
-    console.log(op1Display);
 
     dispTop.textContent = op1Display + ' ' + operator;
     dispBot.textContent = operand2;
